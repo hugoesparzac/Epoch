@@ -107,18 +107,18 @@ Epoch deliberately avoids over-engineering. Instead of forcing complex architect
 src/
  ├── Epoch.Api/                   # ASP.NET Core Web API 
  │    ├── Controllers/            # Presentation Layer
- │    ├── Services/               # Business Logic & Validation Engine
- │    ├── Repositories/           # Data Access Layer
- │    ├── Models/                 # Domain Entities & DTOs
- │    ├── Hubs/                   # SignalR WebSockets Configuration
- │    └── Data/                   # EF Core DbContext & Migrations
+ │    ├── Data/                   # EF Core DbContext & Migrations
+ │    ├── DTOs/                   # Request & response contracts
+ │    ├── Entities/               # Domain Entities & enums
+ │    ├── Hubs/                   # SignalR hubs & real-time communication
+ │    ├── Repositories/           # EF Core data access abstractions
+ │    └── Services/               # Application business logic
  │
  └── Epoch.Client/                # Angular 22 Application
       └── src/app/
            ├── core/              # Guards, Interceptors, Base Services
            ├── shared/            # Reusable UI Components
            └── features/          # Routed modules (Dashboard, Auth)
-
 ```
 
 ## 🛠️ Getting Started
@@ -140,7 +140,7 @@ This option requires only Docker installed on your machine. Perfect for recruite
 #### Run Everything
 
 ```bash
-git clone https://github.com/hugoesparzac/NorthwindElementary.git
+git clone https://github.com/hugoesparzac/Epoch.git
 ```
 ```bash
 cd Epoch
@@ -153,9 +153,9 @@ docker compose up --build
 
 | Service | URL |
 | --- | --- |
-| Frontend | [http://localhost:4200](https://www.google.com/search?q=http://localhost:4200) |
-| Backend API | [http://localhost:8080](https://www.google.com/search?q=http://localhost:8080) |
-| Swagger UI | [http://localhost:8080/swagger](https://www.google.com/search?q=http://localhost:8080/swagger) |
+| Frontend | http://localhost:4200 |
+| Backend API | http://localhost:8080 |
+| Swagger UI | http://localhost:8080/swagger |
 
 ### 💻 Option 2 — Hybrid Local Development (Recommended)
 
@@ -171,7 +171,7 @@ This workflow provides the best developer experience with Angular Hot Reload and
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/hugoesparzac/NorthwindElementary.git
+git clone https://github.com/hugoesparzac/Epoch.git
 ```
 ```bash
 cd Epoch
@@ -179,7 +179,7 @@ cd Epoch
 
 #### 2. Start PostgreSQL
 
-The development database configuration is included in `appsettings.Development.json`.
+The PostgreSQL development container is configured through Docker Compose and `.env` variables.
 
 ```bash
 docker compose up database -d
@@ -221,11 +221,31 @@ ng serve
 
 ## 🔧 Environment Configuration
 
+The project uses environment variables for Docker-based development.
+
+Before running the application, create a local `.env` file from the provided template:
+
+```bash
+cp .env.example .env
+```
+
+You may customize the development credentials if desired.
+
 > [!NOTE]
-> No manual environment configuration is required for local development. The repository includes a preconfigured `appsettings.Development.json` file intended exclusively for development and onboarding purposes.
+> The `.env` file is intentionally excluded from version control and should never contain production credentials.
+
+### ASP.NET Core User Secrets
+
+For hybrid local development (`dotnet watch`), the backend uses ASP.NET Core User Secrets for local connection strings and sensitive development configuration.
+
+Example:
+
+```bash
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=Epoch;Username=postgres;Password=your_password"
+```
 
 > [!WARNING]
-> **Development Credentials Only:** The `docker-compose.yml` includes default credentials for development purposes only. **Never use these in production.**
+> The credentials provided in `.env.example` are intended exclusively for local development and testing. Never reuse development credentials in production environments.
 
 ## 📝 API Documentation
 

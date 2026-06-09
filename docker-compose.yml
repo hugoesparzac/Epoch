@@ -3,9 +3,9 @@ services:
     image: postgres:17.2
     container_name: epoch-db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres_dev_password
-      - POSTGRES_DB=Epoch
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -25,7 +25,7 @@ services:
     container_name: epoch-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=database;Database=Epoch;Username=postgres;Password=postgres_dev_password
+      - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
     depends_on:
       database:
         condition: service_healthy
