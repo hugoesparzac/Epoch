@@ -14,5 +14,5 @@ public class Event
     public DateTime CreatedAtUtc { get; set; }
     public bool IsDeleted { get; set; }
     public Guid UserId { get; set; }
-    public required User User { get; set; }
+    public User? User { get; set; }
 }
