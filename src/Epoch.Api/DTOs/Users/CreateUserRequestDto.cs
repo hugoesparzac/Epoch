@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Epoch.Api.DTOs.Users;
 
-public record CreateUserRequest(
+public record CreateUserRequestDto(
     [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
     [MaxLength(50)]
     string Username,

@@ -4,5 +4,7 @@ namespace Epoch.Api.Services;
 
 public interface IUserService
 {
-    Task<UserResponse> RegisterAsync(CreateUserRequest request);
+    Task<UserResponseDto> RegisterAsync(CreateUserRequestDto requestDto);
+    Task<UserResponseDto?> GetByIdAsync(Guid id);
+    Task<AuthResponseDto> LoginAsync(LoginRequestDto requestDto);
 }

@@ -6,6 +6,10 @@ namespace Epoch.Api.Repositories;
 
 public class UserRepository(ApplicationDbContext context) : IUserRepository
 {
+    public async Task<User?> GetByIdAsync(Guid id)
+    {
+        return await context.Users.FindAsync(id); 
+    }
     public async Task<User?> GetByEmailAsync(string email)
     {
         return await context.Users

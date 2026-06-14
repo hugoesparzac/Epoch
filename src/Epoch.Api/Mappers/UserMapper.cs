@@ -5,9 +5,9 @@ namespace Epoch.Api.Mappers;
 
 public static class UserMapper
 {
-    public static UserResponse ToResponse(this User u)
+    public static UserResponseDto ToResponse(this User u)
     {
-        return new UserResponse(
+        return new UserResponseDto(
             Id: u.Id,
             Username: u.Username,
             Email: u.Email,
@@ -15,16 +15,16 @@ public static class UserMapper
         );
     }
     
-    public static User ToEntity(this CreateUserRequest request, string hashedPassword)
+    public static User ToEntity(this CreateUserRequestDto requestDto, string hashedPassword)
     {
         return new User
         {
-            Username = request.Username,
-            NormalizedUsername = request.Username.ToUpperInvariant(),
-            Email = request.Email,
-            NormalizedEmail = request.Email.ToUpperInvariant(),
+            Username = requestDto.Username,
+            NormalizedUsername = requestDto.Username.ToUpperInvariant(),
+            Email = requestDto.Email,
+            NormalizedEmail = requestDto.Email.ToUpperInvariant(),
             PasswordHash = hashedPassword,
-            PreferredTimeZone = request.PreferredTimeZone
+            PreferredTimeZone = requestDto.PreferredTimeZone
         };
     }
 }

@@ -1,6 +1,6 @@
 namespace Epoch.Api.DTOs.Users;
 
-public record UserResponse(
+public record UserResponseDto(
     Guid Id,
     string Username,
     string Email,
